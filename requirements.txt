@@ -1,4 +1,4 @@
-وبالrequirements ?04:55discord.py
+discord.py
 deep-translator
 better-profanity
 python-dotenv
