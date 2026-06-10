@@ -1,4 +1,4 @@
-discord.py
-googletrans==4.0.0-rc1
+وبالrequirements ?04:55discord.py
+deep-translator
 better-profanity
 python-dotenv
