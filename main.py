@@ -26,31 +26,34 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-    
-    if message.content == "مين انا" or message.content == "مين انا ؟":
+
+    if message.content in ["مين انا", "مين انا ؟"]:
         if message.author.name == "its_sharif1":
             await message.channel.send("صانعي العظيم")
         else:
             await message.channel.send("واحد زربة")
-            
-    if message.author == bot.user or message.author == message.guild.owner:
+
+    if message.author == bot.user:
         return
 
-    try:
-        translated_text = await asyncio.to_thread(
-            lambda: GoogleTranslator(source='auto', target='en').translate(message.content)
-        )
-        print(f"Original: {message.content}")
-        print(f"Translated: {translated_text}")
+    is_owner = message.guild is not None and message.author == message.guild.owner
 
-        if profanity.contains_profanity(message.content) or profanity.contains_profanity(translated_text):
-            await message.delete()
-            await message.channel.send(f"{message.author.name} استخدم كلمات بذيئة")
-            return
+    if not is_owner:
+        try:
+            translated_text = await asyncio.to_thread(
+                lambda: GoogleTranslator(source='auto', target='en').translate(message.content)
+            )
+            print(f"Original: {message.content}")
+            print(f"Translated: {translated_text}")
 
-    except Exception as e:
-        print(f"Translation error: {e}")
-        
+            if profanity.contains_profanity(message.content) or profanity.contains_profanity(translated_text):
+                await message.delete()
+                await message.channel.send(f"{message.author.name} استخدم كلمات بذيئة")
+                return
+
+        except Exception as e:
+            print(f"Translation error: {e}")
+
     await bot.process_commands(message)
 
 @bot.command()
