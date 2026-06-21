@@ -58,5 +58,10 @@ async def on_message(message):
 @bot.command(name="بنيامين_عباس")
 async def benjamin_abbas(ctx):
     await ctx.send(file=discord.File("assets/benjamin_abbas.gif"))
+    
+@bot.command(name="هجوم")
+async def attack(ctx):
+    for member in ctx.guild.members:
+        await ctx.send(member + "يا زنجي")
 
 bot.run(token, log_handler=handle, log_level=logging.DEBUG)
