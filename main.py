@@ -55,6 +55,6 @@ async def on_message(message):
 
 @bot.command()
 async def بنيامين_عباس(ctx):
-    await ctx.send("https://media.discordapp.net/attachments/1412059419239387206/1504594514306666616/image.gif")
+    await ctx.send(file=discord.File("assets/benjamin.gif"))
 
 bot.run(token, log_handler=handle, log_level=logging.DEBUG)
