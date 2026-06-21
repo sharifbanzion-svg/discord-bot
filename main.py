@@ -26,6 +26,13 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
+    
+    if message.content == "مين انا" or message.content == "مين انا ؟":
+        if message.author.name == "its_sharif1":
+            await message.channel.send("صانعي العظيم")
+        else:
+            await message.channel.send("واحد زربة")
+            
     if message.author == bot.user or message.author == message.guild.owner:
         return
 
@@ -43,15 +50,7 @@ async def on_message(message):
 
     except Exception as e:
         print(f"Translation error: {e}")
-
-    if message.content == "مين عمك":
-        await message.channel.send("شوغن عمي")
-    if message.content == "مين انا" or message.content == "مين انا ؟":
-        if message.author.name == "its_sharif1":
-            await message.channel.send("صانعي العظيم")
-        else:
-            await message.channel.send("واحد زربة")
-
+        
     await bot.process_commands(message)
 
 @bot.command()
