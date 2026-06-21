@@ -32,7 +32,7 @@ async def on_message(message):
         else:
             await message.channel.send("واحد زربة")
 
-    if message.author == bot.user:
+    if message.author == bot.user or message.author == its_sharif1:
         return
 
     is_owner = message.guild is not None and message.author == message.guild.owner
@@ -58,10 +58,10 @@ async def on_message(message):
 @bot.command(name="بنيامين_عباس")
 async def benjamin_abbas(ctx):
     await ctx.send(file=discord.File("assets/benjamin_abbas.gif"))
-    
+
 @bot.command(name="هجوم")
 async def attack(ctx):
     for member in ctx.guild.members:
-        await ctx.send(member + "يا زنجي")
+        await ctx.send(member.mention + " يا زنجي")
 
 bot.run(token, log_handler=handle, log_level=logging.DEBUG)
