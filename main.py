@@ -26,7 +26,6 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-
     if message.content in ["مين انا", "مين انا ؟"]:
         if message.author.name == "its_sharif1":
             await message.channel.send("صانعي العظيم")
@@ -56,8 +55,8 @@ async def on_message(message):
 
     await bot.process_commands(message)
 
-@bot.command()
-async def بنيامين_عباس(ctx):
+@bot.command(name="بنيامين_عباس")
+async def benjamin_abbas(ctx):
     await ctx.send(file=discord.File("assets/benjamin_abbas.gif"))
 
 bot.run(token, log_handler=handle, log_level=logging.DEBUG)
