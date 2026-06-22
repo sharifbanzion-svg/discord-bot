@@ -101,10 +101,10 @@ async def send_to_user(ctx, member: discord.Member):
         try:
             for i in range(20):
                 await member.send(f"يا {member.name} يا زنجي")
-            await ctx.send(f"تم إرسال السلام بنجاح إلى {member.display_name}!")
+            await ctx.send(f"سلمت على {member.display_name}!")
         except discord.Forbidden:
-            await ctx.send(f"لا يمكنني إرسال رسائل خاصة لـ {member.display_name} (قد يكون مغلقاً للخاص).")
+            await ctx.send(f"بقدرش ارسل لـ {member.display_name}")
     else:
-        await ctx.send("ليس لديك صلاحية استخدام هذا الأمر!")
+        await ctx.send("امشي لك معاكش صلاحية ( ابلع )")
 
 bot.run(token, log_handler=handle, log_level=logging.DEBUG)
