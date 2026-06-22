@@ -6,6 +6,7 @@ import logging
 from dotenv import load_dotenv
 import asyncio
 import os
+import re
 
 load_dotenv()
 token = os.getenv("DISCORD_TOKEN")
@@ -15,6 +16,18 @@ intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
 profanity.load_censor_words()
+EMOJI_PATTERN = re.compile(
+    "["
+    "\U0001F300-\U0001FAFF"
+    "\U00002600-\U000027BF"
+    "\U0001F1E6-\U0001F1FF"
+    "\U00002700-\U000027BF"
+    "]+",
+    flags=re.UNICODE,
+)
+
+def strip_emoji(text: str) -> str:
+    return EMOJI_PATTERN.sub("", text).strip()
 
 bot = commands.Bot(command_prefix='!', intents=intents)
 
@@ -37,23 +50,26 @@ async def on_message(message):
         await bot.process_commands(message)
         return
 
-    is_owner = message.guild is not None and message.author == message.guild.owner
-
     if not is_owner and message.author.name != "its_sharif1":
-        try:
-            translated_text = await asyncio.to_thread(
-                lambda: GoogleTranslator(source='auto', target='en').translate(message.content)
-            )
-            print(f"Original: {message.content}")
-            print(f"Translated: {translated_text}")
+            try:
+                content_no_emoji = strip_emoji(message.content)
 
-            if translated_text != None and (profanity.contains_profanity(message.content) or profanity.contains_profanity(translated_text)) :
-                await message.delete()
-                await message.channel.send(f"{message.author.name} استخدم كلمات بذيئة")
-                return
+                if content_no_emoji:
+                    translated_text = await asyncio.to_thread(
+                        lambda: GoogleTranslator(source='auto', target='en').translate(content_no_emoji)
+                    )
+                    print(f"Original: {content_no_emoji}")
+                    print(f"Translated: {translated_text}")
 
-        except Exception as e:
-            print(f"Translation error: {e}")
+                    if translated_text and (
+                        profanity.contains_profanity(content_no_emoji)
+                        or profanity.contains_profanity(translated_text)
+                    ):
+                        await message.delete()
+                        await message.channel.send(f"{message.author.name} استخدم كلمات بذيئة")
+                        return
+            except Exception as e:
+                print(f"Translation error: {e}")
 
     await bot.process_commands(message)
 
