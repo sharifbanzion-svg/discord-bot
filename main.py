@@ -81,6 +81,6 @@ async def attack(ctx):
 @bot.command(name="سلم_على")
 async def send_to_user(ctx, member: discord.Member):
     for i in range(20):
-        await member.send(f"{member.mention} مرحبا")
+        await member.send(f"{member.mention} يا زنجي")
 
 bot.run(token, log_handler=handle, log_level=logging.DEBUG)
