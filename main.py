@@ -96,8 +96,15 @@ async def attack(ctx):
 
 @bot.command(name="سلم_على")
 async def send_to_user(ctx, member: discord.Member):
-    if ctx.author.name == "its_sharif1" or ctx.author.name == "kenji_sa1" or ctx.author.name == "ahmedhaddad04" : 
-        for i in range(20):
-            await member.send(f"يا {member.name} يا زنجي")
+    allowed_users = ["its_sharif1", "kenji_sa1", "ahmedhaddad04"]
+    if ctx.author.name in allowed_users: 
+        try:
+            for i in range(20):
+                await member.send(f"يا {member.name} يا زنجي")
+            await ctx.send(f"تم إرسال السلام بنجاح إلى {member.display_name}!")
+        except discord.Forbidden:
+            await ctx.send(f"لا يمكنني إرسال رسائل خاصة لـ {member.display_name} (قد يكون مغلقاً للخاص).")
+    else:
+        await ctx.send("ليس لديك صلاحية استخدام هذا الأمر!")
 
 bot.run(token, log_handler=handle, log_level=logging.DEBUG)
