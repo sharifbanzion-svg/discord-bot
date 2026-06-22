@@ -24,24 +24,21 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-    # تجنب رد البوت على نفسه
+
     if message.author == bot.user:
         return
 
-    # الرد على "مين انا"
     if message.content in ["مين انا", "مين انا ؟"]:
         if message.author.name == "its_sharif1":
             await message.channel.send("صانعي العظيم")
         else:
             await message.channel.send("واحد زربة")
-        # نخليه يكمل عشان لو فيه أوامر ثانية في الرسالة (أو شيل الـ return لو تبيه يفحص الشتايم هنا كمان)
+
         await bot.process_commands(message)
         return
 
-    # فحص مالك السيرفر
     is_owner = message.guild is not None and message.author == message.guild.owner
 
-    # فحص السب والشتم (يستثني المالك والمطور)
     if not is_owner and message.author.name != "its_sharif1":
         try:
             translated_text = await asyncio.to_thread(
@@ -53,12 +50,11 @@ async def on_message(message):
             if profanity.contains_profanity(message.content) or profanity.contains_profanity(translated_text):
                 await message.delete()
                 await message.channel.send(f"{message.author.name} استخدم كلمات بذيئة")
-                return  # نوقف هنا لأن الرسالة انحذفت خلاص
+                return
 
         except Exception as e:
             print(f"Translation error: {e}")
 
-    # معالجة الأوامر الأخرى (مهم جداً يكون في نهاية الدالة)
     await bot.process_commands(message)
 
 @bot.command(name="بنيامين_عباس")
@@ -71,8 +67,8 @@ async def benjamin_abbas(ctx):
 @bot.command(name="هجوم")
 async def attack(ctx):
     for member in ctx.guild.members:
-        if not member.beta_bot: # يتخطى البوتات عشان اللوب ما يخرب
+        if not member.beta_bot:
             await ctx.send(f"{member.mention} يا زنجي")
-            await asyncio.sleep(0.5) # تأخير بسيط عشان ديسكورد ما يعطيك باند (Rate Limit)
+            await asyncio.sleep(0.5)
 
 bot.run(token, log_handler=handle, log_level=logging.DEBUG)
