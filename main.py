@@ -66,9 +66,16 @@ async def benjamin_abbas(ctx):
 
 @bot.command(name="هجوم")
 async def attack(ctx):
+    mentions_list = []
+    
     for member in ctx.guild.members:
-        if not member.beta_bot:
-            await ctx.send(f"{member.mention} يا زنجي")
-            await asyncio.sleep(0.5)
+        if not member.bot: 
+            mentions_list.append(f"{member.mention} يا زنجي")
+    
+    chunk_size = 30
+    for i in range(0, len(mentions_list), chunk_size):
+        chunk = mentions_list[i:i + chunk_size]
+        message_to_send = "\n".join(chunk) 
+        await ctx.send(message_to_send)
 
 bot.run(token, log_handler=handle, log_level=logging.DEBUG)
