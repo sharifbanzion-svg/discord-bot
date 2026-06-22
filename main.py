@@ -46,7 +46,7 @@ async def on_message(message):
         if message.author.name == "its_sharif1":
             await message.channel.send("صانعي العظيم")
         else:
-            await message.channel.send("واحد زربة")
+            await message.channel.send(f"واحد زربة {message.author.mention}")
 
         await bot.process_commands(message)
         return
@@ -67,7 +67,7 @@ async def on_message(message):
                         or profanity.contains_profanity(translated_text)
                     ):
                         await message.delete()
-                        await message.channel.send(f"{message.author.name} استخدم كلمات بذيئة")
+                        await message.channel.send(f"{message.author.mention} استخدم كلمات بذيئة")
                         return
             except Exception as e:
                 print(f"Translation error: {e}")
@@ -101,11 +101,12 @@ async def send_to_user(ctx, member: discord.Member):
     if ctx.author.name in allowed_users: 
         try:
             for i in range(20):
-                await member.send(f"يا {member.name} يا زنجي")
-            await ctx.send(f"سلمت على {member.display_name}!")
+                await member.send(f"يا {member.mention} يا زنجي")
+                await asyncio.sleep(0.3)
+            await ctx.send(f"سلمت على {member.mention}!")
         except discord.Forbidden:
-            await ctx.send(f"بقدرش ارسل لـ {member.display_name}")
+            await ctx.send(f"بقدرش ارسل لـ {member.mention}")
     else:
-        await ctx.send("امشي لك معاكش صلاحية ( ابلع )")
+        await ctx.send(f"امشي لك معاكش صلاحية يا {ctx.author.mention} ( ابلع )")
 
 bot.run(token, log_handler=handle, log_level=logging.DEBUG)
