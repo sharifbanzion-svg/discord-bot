@@ -37,7 +37,7 @@ async def on_message(message):
 
     is_owner = message.guild is not None and message.author == message.guild.owner
 
-    if not is_owner:
+    if not is_owner and message.author != its_sharif1 :
         try:
             translated_text = await asyncio.to_thread(
                 lambda: GoogleTranslator(source='auto', target='en').translate(message.content)
