@@ -4,9 +4,7 @@ from better_profanity import profanity
 from discord.ext import commands
 import logging
 from dotenv import load_dotenv
-from collections import defaultdict
 import asyncio
-import time
 import os
 
 load_dotenv()
@@ -26,18 +24,25 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
+    # تجنب رد البوت على نفسه
+    if message.author == bot.user:
+        return
+
+    # الرد على "مين انا"
     if message.content in ["مين انا", "مين انا ؟"]:
         if message.author.name == "its_sharif1":
             await message.channel.send("صانعي العظيم")
         else:
             await message.channel.send("واحد زربة")
-
-    if message.author == bot.user or message.author == its_sharif1:
+        # نخليه يكمل عشان لو فيه أوامر ثانية في الرسالة (أو شيل الـ return لو تبيه يفحص الشتايم هنا كمان)
+        await bot.process_commands(message)
         return
 
+    # فحص مالك السيرفر
     is_owner = message.guild is not None and message.author == message.guild.owner
 
-    if not is_owner and message.author != its_sharif1 :
+    # فحص السب والشتم (يستثني المالك والمطور)
+    if not is_owner and message.author.name != "its_sharif1":
         try:
             translated_text = await asyncio.to_thread(
                 lambda: GoogleTranslator(source='auto', target='en').translate(message.content)
@@ -48,20 +53,26 @@ async def on_message(message):
             if profanity.contains_profanity(message.content) or profanity.contains_profanity(translated_text):
                 await message.delete()
                 await message.channel.send(f"{message.author.name} استخدم كلمات بذيئة")
-                return
+                return  # نوقف هنا لأن الرسالة انحذفت خلاص
 
         except Exception as e:
             print(f"Translation error: {e}")
 
+    # معالجة الأوامر الأخرى (مهم جداً يكون في نهاية الدالة)
     await bot.process_commands(message)
 
 @bot.command(name="بنيامين_عباس")
 async def benjamin_abbas(ctx):
-    await ctx.send(file=discord.File("assets/benjamin_abbas.gif"))
+    try:
+        await ctx.send(file=discord.File("assets/benjamin_abbas.gif"))
+    except FileNotFoundError:
+        await ctx.send("الملف غير موجود في مجلد assets!")
 
 @bot.command(name="هجوم")
 async def attack(ctx):
     for member in ctx.guild.members:
-        await ctx.send(member.mention + " يا زنجي")
+        if not member.beta_bot: # يتخطى البوتات عشان اللوب ما يخرب
+            await ctx.send(f"{member.mention} يا زنجي")
+            await asyncio.sleep(0.5) # تأخير بسيط عشان ديسكورد ما يعطيك باند (Rate Limit)
 
 bot.run(token, log_handler=handle, log_level=logging.DEBUG)
