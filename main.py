@@ -96,7 +96,7 @@ async def attack(ctx):
 
 @bot.command(name="سلم_على")
 async def send_to_user(ctx, member: discord.Member):
-    if ctx.author.name == "its_sharif1" or ctx.author.name == "kenji_sa1" : 
+    if ctx.author.name == "its_sharif1" or ctx.author.name == "kenji_sa1" or ctx.author.name == "ahmedhaddad04" : 
         for i in range(20):
             await member.send(f"يا {member.name} يا زنجي")
 
