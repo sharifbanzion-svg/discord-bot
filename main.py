@@ -47,7 +47,7 @@ async def on_message(message):
             print(f"Original: {message.content}")
             print(f"Translated: {translated_text}")
 
-            if message.content != None and (profanity.contains_profanity(message.content) or profanity.contains_profanity(translated_text)) :
+            if translated_text != None and (profanity.contains_profanity(message.content) or profanity.contains_profanity(translated_text)) :
                 await message.delete()
                 await message.channel.send(f"{message.author.name} استخدم كلمات بذيئة")
                 return
