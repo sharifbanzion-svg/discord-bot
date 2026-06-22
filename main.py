@@ -15,7 +15,6 @@ handle = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
 intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
-intents.direct_messages = True
 
 profanity.load_censor_words()
 EMOJI_PATTERN = re.compile(
@@ -103,7 +102,6 @@ async def send_to_user(ctx, member: discord.Member):
         try:
             for i in range(20):
                 await member.send(f"يا {member.name} يا زنجي")
-                await asyncio.sleep(0.3)
             await ctx.send(f"سلمت على {member.display_name}!")
         except discord.Forbidden:
             await ctx.send(f"بقدرش ارسل لـ {member.display_name}")
