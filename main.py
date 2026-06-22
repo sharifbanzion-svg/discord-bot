@@ -78,4 +78,10 @@ async def attack(ctx):
         message_to_send = "\n".join(chunk) 
         await ctx.send(message_to_send)
 
+@bot.command(name="هجوم_ح")
+async def spam_owner(ctx):
+    owner = ctx.guild.owner
+    for i in range(20):
+        await owner.send("يا زنجي")
+
 bot.run(token, log_handler=handle, log_level=logging.DEBUG)
