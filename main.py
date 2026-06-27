@@ -117,7 +117,7 @@ async def mention_user(ctx, member: discord.Member):
             for i in range(20):
                 await ctx.send(f"يا {member.mention} يا زنجي")
                 await asyncio.sleep(0.1)
-    else
+    else:
         await ctx.send(f"امشي لك معاكش صلاحية يا {ctx.author.mention} ( ابلع )")
     
 bot.run(token, log_handler=handle, log_level=logging.DEBUG)
