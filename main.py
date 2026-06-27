@@ -110,7 +110,7 @@ async def send_to_user(ctx, member: discord.Member):
         await ctx.send(f"امشي لك معاكش صلاحية يا {ctx.author.mention} ( ابلع )")
 
 @bot.command(name="نادي_على")
-async def mention_user(ctx, member: discord.Member):
+async def call_user(ctx, member: discord.Member):
     allowed_users = ["its_sharif1", "kenji_sa1", "ahmedhaddad04"]
     if ctx.author.name in allowed_users:
         try:
