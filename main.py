@@ -117,6 +117,8 @@ async def idk(ctx, member: discord.Member):
             for i in range(20):
                 await ctx.send(f"يا {member.mention} يا زنجي")
                 await asyncio.sleep(0.1)
+        except Exception as e:
+            print(f"حدث خطأ: {e}")
     else:
         await ctx.send(f"امشي لك معاكش صلاحية يا {ctx.author.mention} ( ابلع )")
     
