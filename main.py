@@ -102,11 +102,22 @@ async def send_to_user(ctx, member: discord.Member):
         try:
             for i in range(20):
                 await member.send(f"يا {member.mention} يا زنجي")
-                await asyncio.sleep(0.3)
+                await asyncio.sleep(0.1)
             await ctx.send(f"سلمت على {member.mention}!")
         except discord.Forbidden:
             await ctx.send(f"بقدرش ارسل لـ {member.mention}")
     else:
         await ctx.send(f"امشي لك معاكش صلاحية يا {ctx.author.mention} ( ابلع )")
 
+@bot.command(name="نادي_على")
+async def mention_user(ctx, member: discord.Member):
+    allowed_users = ["its_sharif1", "kenji_sa1", "ahmedhaddad04"]
+    if ctx.author.name in allowed_users:
+        try:
+            for i in range(20):
+                await ctx.send(f"يا {member.mention} يا زنجي")
+                await asyncio.sleep(0.1)
+    else
+        await ctx.send(f"امشي لك معاكش صلاحية يا {ctx.author.mention} ( ابلع )")
+    
 bot.run(token, log_handler=handle, log_level=logging.DEBUG)
