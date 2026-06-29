@@ -43,7 +43,7 @@ async def on_message(message):
         return
     if message.author.name == "blackwings0429" :
         await message.delete()
-        await message.channel.send(f"اصمت ايها العبد الزنجي يا {message.author.mention}")
+        await message.channel.send(f"اصمت ايها العب د الزن جي يا {message.author.mention}")
     if message.content in ["مين انا", "مين انا ؟"]:
         if message.author.name == "its_sharif1":
             await message.channel.send("صانعي العظيم")
