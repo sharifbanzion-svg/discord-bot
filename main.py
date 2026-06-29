@@ -38,42 +38,45 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-
     if message.author == bot.user:
         return
-    if message.author.name == "blackwings0429" :
-        await message.delete()
-        await message.channel.send(f"اصمت ايها العبد الزنجي يا {message.author.mention}")
+
+    if message.author.name == "blackwings0429":
+        try:
+            await message.delete()
+            await message.channel.send(f"{message.author.mention} استخدم كلمات بذيئة")
+        except discord.NotFound:
+            pass
         return
+
     if message.content in ["مين انا", "مين انا ؟"]:
         if message.author.name == "its_sharif1":
             await message.channel.send("صانعي العظيم")
         else:
             await message.channel.send(f"واحد زربة {message.author.mention}")
-
         await bot.process_commands(message)
         return
 
     if message.author.name != "its_sharif1":
-            try:
-                content_no_emoji = strip_emoji(message.content)
+        try:
+            content_no_emoji = strip_emoji(message.content)
 
-                if content_no_emoji:
-                    translated_text = await asyncio.to_thread(
-                        lambda: GoogleTranslator(source='auto', target='en').translate(content_no_emoji)
-                    )
-                    print(f"Original: {content_no_emoji}")
-                    print(f"Translated: {translated_text}")
+            if content_no_emoji:
+                translated_text = await asyncio.to_thread(
+                    lambda: GoogleTranslator(source='auto', target='en').translate(content_no_emoji)
+                )
+                print(f"Original: {content_no_emoji}")
+                print(f"Translated: {translated_text}")
 
-                    if translated_text and (
-                        profanity.contains_profanity(content_no_emoji)
-                        or profanity.contains_profanity(translated_text)
-                    ):
-                        await message.delete()
-                        await message.channel.send(f"{message.author.mention} استخدم كلمات بذيئة")
-                        return
-            except Exception as e:
-                print(f"Translation error: {e}")
+                if translated_text and (
+                    profanity.contains_profanity(content_no_emoji)
+                    or profanity.contains_profanity(translated_text)
+                ):
+                    await message.delete()
+                    await message.channel.send(f"{message.author.mention} استخدم كلمات بذيئة")
+                    return
+        except Exception as e:
+            print(f"Translation error: {e}")
 
     await bot.process_commands(message)
 
