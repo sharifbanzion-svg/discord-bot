@@ -41,14 +41,6 @@ async def on_message(message):
     if message.author == bot.user:
         return
 
-    if message.author.name == "blackwings0429":
-        try:
-            await message.delete()
-            await message.channel.send(f"{message.author.mention} استخدم كلمات بذيئة")
-        except discord.NotFound:
-            pass
-        return
-
     if message.content in ["مين انا", "مين انا ؟"]:
         if message.author.name == "its_sharif1":
             await message.channel.send("صانعي العظيم")
