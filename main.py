@@ -57,7 +57,7 @@ async def on_message(message):
         await bot.process_commands(message)
         return
 
-    if message.author.name != "its_sharif1":
+    if !(message.author.name in ["its_sharif1", "ahmedhaddad04"]) :
         try:
             content_no_emoji = strip_emoji(message.content)
 
