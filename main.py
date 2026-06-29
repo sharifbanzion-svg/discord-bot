@@ -41,7 +41,7 @@ async def on_message(message):
 
     if message.author == bot.user:
         return
-    if message.author.name != "blackwings0429" :
+    if message.author.name == "blackwings0429" :
         await message.delete()
         await message.channel.send(f"اصمت ايها العبد الزنجي يا {message.author.mention}")
     if message.content in ["مين انا", "مين انا ؟"]:
