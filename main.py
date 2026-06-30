@@ -49,7 +49,7 @@ async def on_message(message):
         await bot.process_commands(message)
         return
 
-    if message.author.name not in ["its_sharif1", "ahmedhaddad04"] :
+    if message.author.name not in ["its_sharif1", "ahmedhaddad04"]:
         try:
             content_no_emoji = strip_emoji(message.content)
 
@@ -76,11 +76,17 @@ async def on_message(message):
 async def benjamin_abbas(ctx):
     try:
         await ctx.send(file=discord.File("assets/benjamin_abbas.gif"))
+    except Exception as e:
+        print(f"Error sending gif: {e}")
+        await ctx.send("لم أتمكن من إرسال ملف الـ GIF، تأكد من وجود المجلد والملف بشكل صحيح.")
 
 @bot.command(name="الامام_الجولاني")
 async def fourteenth_imam(ctx):
     try:
         await ctx.send(file=discord.File("assets/alsharaa.mp4"))
+    except Exception as e:
+        print(f"Error sending video: {e}")
+        await ctx.send("لم أتمكن من إرسال مقطع الفيديو، تأكد من وجود المجلد والملف بشكل صحيح.")
 
 @bot.command(name="هجوم")
 async def attack(ctx):
