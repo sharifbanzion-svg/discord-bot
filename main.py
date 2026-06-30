@@ -79,6 +79,13 @@ async def benjamin_abbas(ctx):
     except FileNotFoundError:
         await ctx.send("الملف غير موجود في مجلد assets!")
 
+@bot.command(name="الامام_الرابع_عشر")
+async def fourteenth_imam(ctx):
+    try:
+        await ctx.send(file=discord.File("assets/alsharaa.mp4"))
+    except FileNotFoundError:
+        await ctx.send("الملف غير موجود في مجلد assets!")
+
 @bot.command(name="هجوم")
 async def attack(ctx):
     mentions_list = []
