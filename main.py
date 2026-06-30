@@ -77,7 +77,7 @@ async def benjamin_abbas(ctx):
     try:
         await ctx.send(file=discord.File("assets/benjamin_abbas.gif"))
 
-@bot.command(name="الامام_الرابع_عشر")
+@bot.command(name="الامام_الجولاني")
 async def fourteenth_imam(ctx):
     try:
         await ctx.send(file=discord.File("assets/alsharaa.mp4"))
