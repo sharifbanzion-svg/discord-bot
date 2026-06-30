@@ -76,8 +76,6 @@ async def on_message(message):
 async def benjamin_abbas(ctx):
     try:
         await ctx.send(file=discord.File("assets/benjamin_abbas.gif"))
-    except FileNotFoundError:
-        await ctx.send("الملف غير موجود في مجلد assets!")
 
 @bot.command(name="الامام_الرابع_عشر")
 async def fourteenth_imam(ctx):
