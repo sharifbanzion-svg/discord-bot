@@ -78,7 +78,7 @@ async def benjamin_abbas(ctx):
         await ctx.send(file=discord.File("assets/benjamin_abbas.gif"))
     except Exception as e:
         print(f"Error sending gif: {e}")
-        await ctx.send("لم أتمكن من إرسال ملف الـ GIF، تأكد من وجود المجلد والملف بشكل صحيح.")
+        await ctx.send("مش لاقي الملف :\\")
 
 @bot.command(name="الامام_الجولاني")
 async def fourteenth_imam(ctx):
@@ -86,7 +86,7 @@ async def fourteenth_imam(ctx):
         await ctx.send(file=discord.File("assets/alsharaa.mp4"))
     except Exception as e:
         print(f"Error sending video: {e}")
-        await ctx.send("لم أتمكن من إرسال مقطع الفيديو، تأكد من وجود المجلد والملف بشكل صحيح.")
+        await ctx.send("مش لاقي الملف :\\")
 
 @bot.command(name="هجوم")
 async def attack(ctx):
