@@ -88,6 +88,14 @@ async def fourteenth_imam(ctx):
         print(f"Error sending video: {e}")
         await ctx.send("مش لاقي الملف :\\")
 
+@bot.command(name="اجلد")
+async def whip(ctx):
+    try:
+        await ctx.send(file=discord.File("assets/whip.gif"))
+    except Exception as e:
+        print(f"Error sending video: {e}")
+        await ctx.send("مش لاقي الملف :\\")
+
 @bot.command(name="هجوم")
 async def attack(ctx):
     mentions_list = []
