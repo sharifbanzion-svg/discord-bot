@@ -90,14 +90,19 @@ async def fourteenth_imam(ctx):
 
 @bot.command(name="اجلد")
 async def whip(ctx, member: discord.Member):
-    if ctx.author.name in ["its_sharif1", "kenji_sa1", "ahmedhaddad04"]:
-        try:
-            await ctx.send(f"يا عبد {member.mention}", file=discord.File("assets/whip.gif"))
-        except Exception as e:
-            print(f"Error sending video: {e}")
-            await ctx.send("مش لاقي الملف :\\")
-    else:
+    if ctx.author.name not in ["its_sharif1", "kenji_sa1", "ahmedhaddad04"]:
         await ctx.send("انت عبد بتجلدش")
+        return
+
+    if member.name == "its_sharif1":
+        await ctx.send("بقدرش اجلد صانعي")
+        return
+        
+    try:
+        await ctx.send(f"يا عبد {member.mention}", file=discord.File("assets/whip.gif"))
+    except Exception as e:
+        print(f"Error sending video: {e}")
+        await ctx.send("مش لاقي الملف :\\")
 
 @bot.command(name="هجوم")
 async def attack(ctx):
@@ -116,28 +121,38 @@ async def attack(ctx):
 @bot.command(name="سلم_على")
 async def send_to_user(ctx, member: discord.Member):
     allowed_users = ["its_sharif1", "kenji_sa1", "ahmedhaddad04"]
-    if ctx.author.name in allowed_users: 
-        try:
-            for i in range(20):
-                await member.send(f"يا {member.mention} يا زنجي")
-                await asyncio.sleep(0.1)
-            await ctx.send(f"سلمت على {member.mention}!")
-        except discord.Forbidden:
-            await ctx.send(f"بقدرش ارسل لـ {member.mention}")
-    else:
+    if ctx.author.name not in allowed_users: 
         await ctx.send(f"امشي لك معاكش صلاحية يا {ctx.author.mention} ( ابلع )")
+        return
+
+    if member.name == "its_sharif1":
+        await ctx.send("بقدرش اسلم على صانعي")
+        return
+        
+    try:
+        for i in range(20):
+            await member.send(f"يا {member.mention} يا زنجي")
+            await asyncio.sleep(0.1)
+        await ctx.send(f"سلمت على {member.mention}!")
+    except discord.Forbidden:
+        await ctx.send(f"بقدرش ارسل لـ {member.mention}")
 
 @bot.command(name="نادي_على")
 async def idk(ctx, member: discord.Member):
     allowed_users = ["its_sharif1", "kenji_sa1", "ahmedhaddad04"]
-    if ctx.author.name in allowed_users:
-        try:
-            for i in range(20):
-                await ctx.send(f"يا {member.mention} يا زنجي")
-                await asyncio.sleep(0.1)
-        except Exception as e:
-            print(f"حدث خطأ: {e}")
-    else:
+    if ctx.author.name not in allowed_users:
         await ctx.send(f"امشي لك معاكش صلاحية يا {ctx.author.mention} ( ابلع )")
-    
+        return
+
+    if member.name == "its_sharif1":
+        await ctx.send("بقدرش اسلم على صانعي")
+        return
+        
+    try:
+        for i in range(20):
+            await ctx.send(f"يا {member.mention} يا زنجي")
+            await asyncio.sleep(0.1)
+    except Exception as e:
+        print(f"حدث خطأ: {e}")    
+
 bot.run(token, log_handler=handle, log_level=logging.DEBUG)
