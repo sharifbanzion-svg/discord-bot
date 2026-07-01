@@ -88,15 +88,16 @@ async def fourteenth_imam(ctx):
         print(f"Error sending video: {e}")
         await ctx.send("مش لاقي الملف :\\")
 
-@bot.command(name="اجلد", member: discord.Member)
-async def whip(ctx):
-    if ctx.author.name in ["its_sharif1", "kenji_sa1", "ahmedhaddad04"]
+@bot.command(name="اجلد")
+async def whip(ctx, member: discord.Member):
+    if ctx.author.name in ["its_sharif1", "kenji_sa1", "ahmedhaddad04"]:
         try:
             await ctx.send(f"يا عبد {member.mention}", file=discord.File("assets/whip.gif"))
         except Exception as e:
             print(f"Error sending video: {e}")
             await ctx.send("مش لاقي الملف :\\")
-    else ctx.send("انت عبد بتجلدش")
+    else:
+        await ctx.send("انت عبد بتجلدش")
 
 @bot.command(name="هجوم")
 async def attack(ctx):
