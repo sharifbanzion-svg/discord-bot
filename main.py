@@ -88,10 +88,10 @@ async def fourteenth_imam(ctx):
         print(f"Error sending video: {e}")
         await ctx.send("مش لاقي الملف :\\")
 
-@bot.command(name="اجلد")
+@bot.command(name="اجلد", member: discord.Member)
 async def whip(ctx):
     try:
-        await ctx.send(file=discord.File("assets/whip.gif"))
+        await ctx.send(f"يا عبد {member.mention}", file=discord.File("assets/whip.gif"))
     except Exception as e:
         print(f"Error sending video: {e}")
         await ctx.send("مش لاقي الملف :\\")
