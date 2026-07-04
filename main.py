@@ -15,7 +15,9 @@ handle = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
 intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
+
 allowed_users = ["its_sharif1", "kenji_sa1", "ahmedhaddad04"]
+
 profanity.load_censor_words()
 EMOJI_PATTERN = re.compile(
     "["
@@ -90,7 +92,7 @@ async def fourteenth_imam(ctx):
 
 @bot.command(name="اجلد")
 async def whip(ctx, member: discord.Member):
-    if ctx.author.name not in ["its_sharif1", "kenji_sa1", "ahmedhaddad04"]:
+    if ctx.author.name not in allowed_users:
         await ctx.send("انت عبد بتجلدش")
         return
 
@@ -106,9 +108,11 @@ async def whip(ctx, member: discord.Member):
 
 @bot.command(name="هجوم")
 async def attack(ctx):
-    mentions_list = []
-    if not in allowed_users :
+    if ctx.author.name not in allowed_users:
+        await ctx.send(f"معاكش صلاحية يا {ctx.author.mention}")
         return
+
+    mentions_list = []
     for member in ctx.guild.members:
         if not member.bot: 
             mentions_list.append(f"{member.mention} يا زنجي")
