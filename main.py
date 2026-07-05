@@ -43,6 +43,24 @@ async def on_message(message):
     if message.author == bot.user:
         return
 
+    if message.author.id == 1485385777302077731 and "card has appeared!" in message.content:
+        image_name = None
+        
+        if message.attachments:
+            image_name = message.attachments[0].filename
+            
+        elif message.embeds:
+            for embed in message.embeds:
+                if embed.image and embed.image.url:
+                    image_name = embed.image.url.split('/')[-1].split('?')[0]
+                    break
+                elif embed.thumbnail and embed.thumbnail.url:
+                    image_name = embed.thumbnail.url.split('/')[-1].split('?')[0]
+                    break
+                    
+        if image_name:
+            await message.channel.send(f"اسم الصورة المكتشفة: `{image_name}`")
+
     if message.content in ["مين انا", "مين انا ؟"]:
         if message.author.name == "its_sharif1":
             await message.channel.send("صانعي العظيم")
@@ -51,26 +69,26 @@ async def on_message(message):
         await bot.process_commands(message)
         return
 
-    if message.author.name not in allowed_users:
-        try:
-            content_no_emoji = strip_emoji(message.content)
-
-            if content_no_emoji:
-                translated_text = await asyncio.to_thread(
-                    lambda: GoogleTranslator(source='auto', target='en').translate(content_no_emoji)
-                )
-                print(f"Original: {content_no_emoji}")
-                print(f"Translated: {translated_text}")
-
-                if translated_text and (
-                    profanity.contains_profanity(content_no_emoji)
-                    or profanity.contains_profanity(translated_text)
-                ):
-                    await message.delete()
-                    await message.channel.send(f"{message.author.mention} استخدم كلمات بذيئة")
-                    return
-        except Exception as e:
-            print(f"Translation error: {e}")
+    # if message.author.name not in allowed_users:
+    #     try:
+    #         content_no_emoji = strip_emoji(message.content)
+    #
+    #         if content_no_emoji:
+    #             translated_text = await asyncio.to_thread(
+    #                 lambda: GoogleTranslator(source='auto', target='en').translate(content_no_emoji)
+    #             )
+    #             print(f"Original: {content_no_emoji}")
+    #             print(f"Translated: {translated_text}")
+    #
+    #             if translated_text and (
+    #                 profanity.contains_profanity(content_no_emoji)
+    #                 or profanity.contains_profanity(translated_text)
+    #             ):
+    #                 await message.delete()
+    #                 await message.channel.send(f"{message.author.mention} استخدم كلمات بذيئة")
+    #                 return
+    #     except Exception as e:
+    #         print(f"Translation error: {e}")
 
     await bot.process_commands(message)
 
@@ -144,18 +162,3 @@ async def send_to_user(ctx, member: discord.Member):
 @bot.command(name="نادي_على")
 async def idk(ctx, member: discord.Member):
     if ctx.author.name not in allowed_users:
-        await ctx.send(f"امشي لك معاكش صلاحية يا {ctx.author.mention} ( ابلع )")
-        return
-
-    if member.name == "its_sharif1":
-        await ctx.send("بقدرش اسلم على صانعي")
-        return
-        
-    try:
-        for i in range(20):
-            await ctx.send(f"يا {member.mention} يا زنجي")
-            await asyncio.sleep(0.1)
-    except Exception as e:
-        print(f"حدث خطأ: {e}")    
-
-bot.run(token, log_handler=handle, log_level=logging.DEBUG)
