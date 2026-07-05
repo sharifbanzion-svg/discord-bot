@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 import asyncio
 import os
 import re
-from urllib.parse import urlparse
 
 load_dotenv()
 token = os.getenv("DISCORD_TOKEN")
@@ -35,33 +34,6 @@ def strip_emoji(text: str) -> str:
 
 bot = commands.Bot(command_prefix='!', intents=intents)
 
-bot.cards_catching_enabled = False
-bot.spam_task = None 
-bot.current_channel_id = None 
-
-async def spam_fixed_chars():
-    await bot.wait_until_ready()
-    while bot.cards_catching_enabled:
-        if bot.current_channel_id:
-            channel = bot.get_channel(bot.current_channel_id)
-            if channel:
-                try:
-                    await channel.send("aa")
-                except Exception as e:
-                    print(f"Error sending spam: {e}")
-
-def extract_filename_from_url(url):
-    if not url:
-        return None
-    try:
-        path = urlparse(url).path
-        filename = os.path.basename(path)
-        if filename:
-            return filename
-    except Exception:
-        pass
-    return None
-
 @bot.event
 async def on_ready():
     print('Logged in as {0.user}'.format(bot))
@@ -71,59 +43,7 @@ async def on_message(message):
     if message.author == bot.user:
         return
 
-    # =============================================================
-    # تم إيقاف كود صيد الكروت وإرسال أسمائها تلقائياً بناءً على طلبك
-    # =============================================================
-    """
-    if bot.cards_catching_enabled and message.author.id == 1485385777302077731:
-        is_card_message = False
-        detected_name = None
-
-        if "card has appeared!" in message.content:
-            is_card_message = True
-
-        if message.embeds:
-            for embed in message.embeds:
-                embed_text = ""
-                if embed.title:
-                    embed_text += embed.title + " "
-                if embed.description:
-                    embed_text += embed.description + " "
-                
-                if embed.fields:
-                    for field in embed.fields:
-                        embed_text += f"{field.name} {field.value} "
-
-                if "card has appeared!" in embed_text:
-                    is_card_message = True
-
-                url_to_check = None
-                if embed.image and embed.image.url:
-                    url_to_check = embed.image.url
-                elif embed.thumbnail and embed.thumbnail.url:
-                    url_to_check = embed.thumbnail.url
-
-                if url_to_check:
-                    file_name = extract_filename_from_url(url_to_check)
-                    if file_name:
-                        detected_name = os.path.splitext(file_name)[0]
-
-                if embed.title and "card has appeared!" not in embed.title and not detected_name:
-                    detected_name = embed.title.strip()
-
-        if message.attachments and not detected_name:
-            file_name = message.attachments[0].filename
-            if file_name:
-                detected_name = os.path.splitext(file_name)[0]
-
-        if is_card_message and detected_name:
-            final_name = detected_name.replace('_', ' ').strip()
-            if final_name:
-                await asyncio.sleep(0.1)
-                await message.channel.send(f"{final_name}")
-    """
-    # =============================================================
-
+    # الأجوبة التلقائية المباشرة
     if message.content in ["مين انا", "مين انا ؟"]:
         if message.author.name == "its_sharif1":
             await message.channel.send("صانعي العظيم")
@@ -133,34 +53,6 @@ async def on_message(message):
         return
 
     await bot.process_commands(message)
-
-@bot.command(name="start")
-async def start_catching(ctx):
-    if ctx.guild and ctx.author == ctx.guild.owner and ctx.author.name == "its_sharif1":
-        if not bot.cards_catching_enabled:
-            bot.cards_catching_enabled = True
-            bot.current_channel_id = ctx.channel.id
-            bot.spam_task = bot.loop.create_task(spam_fixed_chars())
-            await ctx.send("✅ تم تفعيل نظام الإرسال التلقائي في هذه القناة!")
-        else:
-            await ctx.send("النظام يعمل بالفعل في هذه القناة.")
-    else:
-        await ctx.send("❌ هذا الأمر مخصص فقط لصاحب السيرفر (its_sharif1).")
-
-@bot.command(name="stop")
-async def stop_catching(ctx):
-    if ctx.guild and ctx.author == ctx.guild.owner and ctx.author.name == "its_sharif1":
-        if bot.cards_catching_enabled:
-            bot.cards_catching_enabled = False
-            bot.current_channel_id = None
-            if bot.spam_task:
-                bot.spam_task.cancel()
-                bot.spam_task = None
-            await ctx.send("🛑 تم إيقاف نظام الإرسال التلقائي.")
-        else:
-            await ctx.send("النظام متوقف بالفعل.")
-    else:
-        await ctx.send("❌ هذا الأمر مخصص فقط لصاحب السيرفر (its_sharif1).")
 
 @bot.command(name="بنيامين_عباس")
 async def benjamin_abbas(ctx):
