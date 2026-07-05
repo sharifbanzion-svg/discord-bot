@@ -44,22 +44,22 @@ async def on_message(message):
         return
 
     if message.author.id == 1485385777302077731 and "card has appeared!" in message.content:
-        image_name = None
+        file_name = None
         
         if message.attachments:
-            image_name = message.attachments[0].filename
+            file_name = message.attachments[0].filename
             
         elif message.embeds:
             for embed in message.embeds:
                 if embed.image and embed.image.url:
-                    image_name = embed.image.url.split('/')[-1].split('?')[0]
+                    file_name = embed.image.url.split('/')[-1].split('?')[0]
                     break
                 elif embed.thumbnail and embed.thumbnail.url:
-                    image_name = embed.thumbnail.url.split('/')[-1].split('?')[0]
+                    file_name = embed.thumbnail.url.split('/')[-1].split('?')[0]
                     break
                     
-        if image_name:
-            await message.channel.send(f"اسم الصورة المكتشفة: `{image_name}`")
+        if file_name:
+            await message.channel.send(f"اسم الملف المكتشف: `{file_name}`")
 
     if message.content in ["مين انا", "مين انا ؟"]:
         if message.author.name == "its_sharif1":
@@ -162,3 +162,18 @@ async def send_to_user(ctx, member: discord.Member):
 @bot.command(name="نادي_على")
 async def idk(ctx, member: discord.Member):
     if ctx.author.name not in allowed_users:
+        await ctx.send(f"امشي لك معاكش صلاحية يا {ctx.author.mention} ( ابلع )")
+        return
+
+    if member.name == "its_sharif1":
+        await ctx.send("بقدرش اسلم على صانعي")
+        return
+        
+    try:
+        for i in range(20):
+            await ctx.send(f"يا {member.mention} يا زنجي")
+            await asyncio.sleep(0.1)
+    except Exception as e:
+        print(f"حدث خطأ: {e}")    
+
+bot.run(token, log_handler=handle, log_level=logging.DEBUG)
