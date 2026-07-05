@@ -7,8 +7,6 @@ from dotenv import load_dotenv
 import asyncio
 import os
 import re
-import random
-import string
 from urllib.parse import urlparse
 
 load_dotenv()
@@ -41,21 +39,16 @@ bot.cards_catching_enabled = False
 bot.spam_task = None 
 bot.current_channel_id = None 
 
-# تم إيقاف دالة السبام بوضع تعليق عليها
-# def generate_random_chars():
-#     return ''.join(random.choices(string.ascii_letters, k=2))
-#
-# async def spam_random_chars():
-#     await bot.wait_until_ready()
-#     while bot.cards_catching_enabled:
-#         if bot.current_channel_id:
-#             channel = bot.get_channel(bot.current_channel_id)
-#             if channel:
-#                 try:
-#                     await channel.send(generate_random_chars())
-#                 except Exception as e:
-#                     print(f"Error sending spam: {e}")
-#         await asyncio.sleep(2.0)
+async def spam_fixed_chars():
+    await bot.wait_until_ready()
+    while bot.cards_catching_enabled:
+        if bot.current_channel_id:
+            channel = bot.get_channel(bot.current_channel_id)
+            if channel:
+                try:
+                    await channel.send("aa")
+                except Exception as e:
+                    print(f"Error sending spam: {e}")
 
 def extract_filename_from_url(url):
     if not url:
@@ -161,9 +154,9 @@ async def start_catching(ctx):
         if not bot.cards_catching_enabled:
             bot.cards_catching_enabled = True
             bot.current_channel_id = ctx.channel.id
-            # تم إيقاف تشغيل مهمة السبام تلقائياً
-            # bot.spam_task = bot.loop.create_task(spam_random_chars())
-            await ctx.send("✅ تم تفعيل نظام جمع الكروت بنجاح!")
+            # تفعيل حلقة إرسال الحرفين في الروم الحالية التي استدعيت فيها الأمر
+            bot.spam_task = bot.loop.create_task(spam_fixed_chars())
+            await ctx.send("✅ تم تفعيل نظام جمع الكروت والإرسال التلقائي في هذه القناة!")
         else:
             await ctx.send("النظام يعمل بالفعل في هذه القناة.")
     else:
@@ -175,11 +168,10 @@ async def stop_catching(ctx):
         if bot.cards_catching_enabled:
             bot.cards_catching_enabled = False
             bot.current_channel_id = None
-            # تم إيقاف إلغاء مهمة السبام المعطلة
-            # if bot.spam_task:
-            #     bot.spam_task.cancel()
-            #     bot.spam_task = None
-            await ctx.send("🛑 تم إيقاف نظام جمع الكروت.")
+            if bot.spam_task:
+                bot.spam_task.cancel()
+                bot.spam_task = None
+            await ctx.send("🛑 تم إيقاف نظام جمع الكروت والإرسال التلقائي.")
         else:
             await ctx.send("النظام متوقف بالفعل.")
     else:
@@ -220,7 +212,7 @@ async def whip(ctx, member: discord.Member):
 @bot.command(name="هجوم")
 async def attack(ctx):
     if ctx.author.name not in allowed_users:
-        await ctx.send(f"معاكش صلاحية يا {ctx.author.mention}")
+        await ctx.send("معاكش صلاحية يا {ctx.author.mention}")
         return
 
     mentions_list = []
