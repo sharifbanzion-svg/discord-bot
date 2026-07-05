@@ -115,6 +115,7 @@ async def on_message(message):
         if is_card_message and detected_name:
             final_name = detected_name.replace('_', ' ').strip()
             if final_name:
+                await asyncio.sleep(0.1)
                 await message.channel.send(f"{final_name}")
 
     if message.content in ["مين انا", "مين انا ؟"]:
