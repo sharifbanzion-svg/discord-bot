@@ -71,6 +71,10 @@ async def on_message(message):
     if message.author == bot.user:
         return
 
+    # =============================================================
+    # تم إيقاف كود صيد الكروت وإرسال أسمائها تلقائياً بناءً على طلبك
+    # =============================================================
+    """
     if bot.cards_catching_enabled and message.author.id == 1485385777302077731:
         is_card_message = False
         detected_name = None
@@ -117,6 +121,8 @@ async def on_message(message):
             if final_name:
                 await asyncio.sleep(0.1)
                 await message.channel.send(f"{final_name}")
+    """
+    # =============================================================
 
     if message.content in ["مين انا", "مين انا ؟"]:
         if message.author.name == "its_sharif1":
@@ -126,27 +132,6 @@ async def on_message(message):
         await bot.process_commands(message)
         return
 
-    # if message.author.name not in allowed_users:
-    #     try:
-    #         content_no_emoji = strip_emoji(message.content)
-    #
-    #         if content_no_emoji:
-    #             translated_text = await asyncio.to_thread(
-    #                 lambda: GoogleTranslator(source='auto', target='en').translate(content_no_emoji)
-    #             )
-    #             print(f"Original: {content_no_emoji}")
-    #             print(f"Translated: {translated_text}")
-    #
-    #             if translated_text and (
-    #                 profanity.contains_profanity(content_no_emoji)
-    #                 or profanity.contains_profanity(translated_text)
-    #             ):
-    #                 await message.delete()
-    #                 await message.channel.send(f"{message.author.mention} استخدم كلمات بذيئة")
-    #                 return
-    #     except Exception as e:
-    #         print(f"Translation error: {e}")
-
     await bot.process_commands(message)
 
 @bot.command(name="start")
@@ -155,9 +140,8 @@ async def start_catching(ctx):
         if not bot.cards_catching_enabled:
             bot.cards_catching_enabled = True
             bot.current_channel_id = ctx.channel.id
-            # تفعيل حلقة إرسال الحرفين في الروم الحالية التي استدعيت فيها الأمر
             bot.spam_task = bot.loop.create_task(spam_fixed_chars())
-            await ctx.send("✅ تم تفعيل نظام جمع الكروت والإرسال التلقائي في هذه القناة!")
+            await ctx.send("✅ تم تفعيل نظام الإرسال التلقائي في هذه القناة!")
         else:
             await ctx.send("النظام يعمل بالفعل في هذه القناة.")
     else:
@@ -172,7 +156,7 @@ async def stop_catching(ctx):
             if bot.spam_task:
                 bot.spam_task.cancel()
                 bot.spam_task = None
-            await ctx.send("🛑 تم إيقاف نظام جمع الكروت والإرسال التلقائي.")
+            await ctx.send("🛑 تم إيقاف نظام الإرسال التلقائي.")
         else:
             await ctx.send("النظام متوقف بالفعل.")
     else:
