@@ -43,7 +43,6 @@ async def on_message(message):
     if message.author == bot.user:
         return
 
-    # الأجوبة التلقائية المباشرة
     if message.content in ["مين انا", "مين انا ؟"]:
         if message.author.name == "its_sharif1":
             await message.channel.send("صانعي العظيم")
@@ -70,6 +69,17 @@ async def fourteenth_imam(ctx):
         print(f"Error sending video: {e}")
         await ctx.send("مش لاقي الملف :\\")
 
+@bot.command(name="رصاصة")
+async def bullet(ctx):
+    if ctx.author.name not in  allowed_users:
+        await ctx.send("انت عبد معكش رصاص")
+        return
+    try:
+        await ctx.send(file=discord.File("assets/alsharaa_bullet.png"))
+    except Exception as e:
+        print(f"Error sending video: {e}")
+        await ctx.send("مش لاقي الملف :\\")
+    
 @bot.command(name="اجلد")
 async def whip(ctx, member: discord.Member):
     if ctx.author.name not in allowed_users:
