@@ -16,7 +16,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
 
-allowed_users = ["its_sharif1", "kenji_sa1", "ahmedhaddad04"]
+allowed_users = ["its_sharif1", "kenji_sa1", "ahmedhaddad04", "albar_18"]
 
 profanity.load_censor_words()
 EMOJI_PATTERN = re.compile(
