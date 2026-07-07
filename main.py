@@ -69,8 +69,8 @@ async def fourteenth_imam(ctx):
         print(f"Error sending video: {e}")
         await ctx.send("مش لاقي الملف :\\")
 
-@bot.command(name="رصاصة")
-async def bullet(ctx):
+@bot.command(name="بدك_رصاصة؟")
+async def wanna_bullet(ctx):
     if ctx.author.name not in  allowed_users:
         await ctx.send("انت عبد معكش رصاص")
         return
